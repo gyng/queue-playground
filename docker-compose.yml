@@ -1,0 +1,15 @@
+version: '2'
+services:
+  rabbit:
+    image: rabbitmq
+    expose:
+      - "5672"
+    networks:
+      - queue
+  client:
+    build: .
+    command: yarn start
+    # depends_on:
+      # - rabbit
+networks:
+  queue:
