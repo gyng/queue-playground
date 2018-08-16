@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node dist/index.js",
+    "start": "node dist/index.js",
+    "dev": "yarn build && yarn start",
     "lint": "tslint --project ."
   },
   "devDependencies": {

@@ -106,7 +106,8 @@ const makeHandler = (tag: string) => {
 
 async function run() {
   const queue = new RabbitQueue();
-  await queue.connect("amqp://localhost:5672");
+  // await queue.connect("amqp://guest:guest@rmq:5672");
+  await queue.connect("amqp://guest:guest@rabbit:5672");
 }
 
 run();

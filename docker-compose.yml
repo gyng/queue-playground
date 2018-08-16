@@ -1,15 +1,19 @@
-version: '2'
+version: '3'
 services:
   rabbit:
-    image: rabbitmq
-    expose:
-      - "5672"
+    image: rabbitmq:management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
-      - queue
+      - rabbitmq
   client:
+    # hostname: rabbitmq
     build: .
     command: yarn start
-    # depends_on:
-      # - rabbit
+    restart: on-failure
+    restart: always
+    networks:
+      - rabbitmq
 networks:
-  queue:
+  rabbitmq:

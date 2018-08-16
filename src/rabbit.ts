@@ -29,7 +29,7 @@ export class RabbitQueue implements IService {
       rabbit
     };
 
-    console.log("conn: connected to", this.connection);
+    console.log("conn: connected to rabbit! (probably)");
   }
 
   public getEvents(topics: string[], since: any) {
@@ -43,7 +43,16 @@ export class RabbitQueue implements IService {
       if (this.connection.channel && this.connection.channel.assertQueue) {
         this.connection.channel.assertQueue(topic).then((ok: any) => {
           console.log(`${topic} queue created`, ok);
-          this.connection.channel.consume(topic, handler);
+          this.connection.channel.consume(topic, msg => {
+            const event = {
+              data: msg.content.toJSON().data,
+              meta: {
+                createdAt: new Date(),
+                type: topic
+              }
+            };
+            handler.receive(event, this.publish.bind(this));
+          });
         });
       }
     });

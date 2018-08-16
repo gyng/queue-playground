@@ -12,3 +12,10 @@ Exploratory repository for RabbitMQ + TS + CQRS. Still early-stage.
 ```
 docker-compose up --build
 ```
+
+or
+
+```
+docker-compose up rabbit
+docker-compose up  --build client
+```
